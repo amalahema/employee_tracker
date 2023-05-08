@@ -40,8 +40,8 @@ function promptUser()
             "View Employees by Department",
             "Add Employee",
             "Remove Employees",
-            "Update Employee Role",
-            "Add Role",
+            "Update EmployeeRole",
+            "Add NewRole",
             "End"
 
        ]
@@ -65,11 +65,11 @@ function promptUser()
           removeEmployees();
           break;
 
-        case "Update Employee Role":
+        case "Update EmployeeRole":
           updateEmployeeRole();
           break;
 
-        case "Add Role":
+        case "Add NewRole":
           addRole();
           break;
 
@@ -79,3 +79,34 @@ function promptUser()
        }
     });
 }
+
+//function for each selectedChoice
+
+    function viewEmployee()
+    {
+
+    }
+    function viewEmployeeByDepartment()
+    {
+
+    }
+    function addEmployee()
+    {
+
+    }
+
+    function removeEmployees()
+    {
+
+    }
+
+    function updateEmployeeRole()
+    {
+
+    }
+
+    function end()
+    {
+
+    }
+
