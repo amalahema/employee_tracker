@@ -1,0 +1,25 @@
+{
+  "name": "employee_tracker",
+  "version": "1.0.0",
+  "description": "## Your Task",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amalahema/employee_tracker.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/amalahema/employee_tracker/issues"
+  },
+  "homepage": "https://github.com/amalahema/employee_tracker#readme",
+  "dependencies": {
+    "inquirer": "^9.2.2",
+    "mysql2": "^3.3.0"
+  }
+}
