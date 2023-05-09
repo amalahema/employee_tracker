@@ -84,16 +84,95 @@ function promptUser()
 
     function viewEmployee()
     {
-
+        console.log("EMPLOYEE DETAILS");
+        var query = 
+        `SELECT e.id, e.first_name, e.last_name, r.title, d.name AS department, r.salary, CONCAT(m.first_name, ' ', m.last_name) AS manager
+        FROM employee e
+        LEFT JOIN role r ON e.role_id = r.id
+        LEFT JOIN department d ON d.id = r.department_id
+        LEFT JOIN employee m ON m.id = e.manager_id`
+        
+        connection.query(query, function (err, res) {
+            if (err) throw err;
+            console.table(res);
+            console.log("Employees viewed!\n");       
+            promptUser();
+          });
     }
     function viewEmployeeByDepartment()
-    {
+    {   
+       console.log("EMPLOYEE DETAILS BY DEPARTMENT\n")
+       var query =
+        `SELECT d.id, d.name, r.salary AS budget
+       FROM employee e
+       LEFT JOIN role r ON e.role_id = r.id
+       LEFT JOIN department d ON d.id = r.department_id
+       GROUP BY d.id, d.name`
 
+       connection.query(query, function (err, res) {
+         if (err) throw err;
+         const departmentChoices = res.map(data => ({
+          value: data.id, name: data.name
+        }));
+    
+        console.table(res);
+        console.log("Department view succeed!\n");
+    
+        promptDepartment(departmentChoices);
+      });
     }
-    function addEmployee()
-    {
+    // User choose the department list, then employees pop up
+    function promptDepartment(departmentChoices) {
 
-    }
+        inquirer
+          .prompt([
+            {
+              type: "list",
+              name: "departmentId",
+              message: "Which department would you choose?",
+              choices: departmentChoices
+            }
+          ])
+          .then(function (answer) {
+            console.log("answer ", answer.departmentId);
+      
+            var query =
+            `SELECT e.id, e.first_name, e.last_name, r.title, d.name AS department 
+            FROM employee e
+            JOIN role r
+              ON e.role_id = r.id
+            JOIN department d
+            ON d.id = r.department_id
+            WHERE d.id = ?`
+            connection.query(query, answer.departmentId, function (err, res) {
+              if (err) throw err;
+      
+              console.table("response ", res);
+              console.log(res.affectedRows + "Employees are viewed!\n");
+      
+              firstPrompt();
+            });
+          });
+      }
+
+   // Make a employee array
+    function addEmployee() {
+        console.log("Inserting an employee!")
+  
+        var query =
+         `SELECT r.id, r.title, r.salary FROM role r`
+  
+        connection.query(query, function (err, res) {
+         if (err) throw err;
+        const roleChoices = res.map(({ id, title, salary }) => ({
+        value: id, title: `${title}`, salary: `${salary}`
+        }));
+  
+        console.table(res);
+        console.log("RoleToInsert!");
+        promptInsert(roleChoices);
+      });
+      }
 
     function removeEmployees()
     {
