@@ -19,7 +19,9 @@
   },
   "homepage": "https://github.com/amalahema/employee_tracker#readme",
   "dependencies": {
-    "inquirer": "^9.2.2",
+    "console.table": "^0.10.0",
+    "dotenv": "^16.0.3",
+    "inquirer": "^8.2.4",
     "mysql2": "^3.3.0"
   }
 }
