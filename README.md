@@ -53,12 +53,12 @@ Github URL :
 
 ### Learnings
 
--  How create the table and insert the deatils
--  How connect the server using mysql username and password  in the specific port
-- Display the list of choices using inquirer
-- Call the individual function depend on the user choice.
-- Assign the result of the mysql query to the the variable query
-- Pass the varaible as the parameter to the connection 
+-  How to create the table and insert the details
+-  How to connect the server using MySQL username and password  in the specific port
+- Display the list of choices using the inquirer
+- Call the individual function depending on the user's choice.
+- Assign the result of the MySQL query to the variable query
+- Pass the variable as the parameter to the connection 
 - Using the response object display the table 
 -  How to use left join to get the details of more than one table
 - How to set up the primary key 
