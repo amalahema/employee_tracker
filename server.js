@@ -19,12 +19,13 @@ const connection = mysql.createConnection({
 
 connection.connect(function (err) {
     if (err) throw err;
-    console.log("connection ");
-    promptUser();//call the function after the connection established
+    console.log("connection success");
+    promptUser();
+    //call the function after the connection established
 });
 
-//create the function for user prompt
 
+//create the function for user prompt
 function promptUser()
 {
     inquirer.prompt({
@@ -34,9 +35,11 @@ function promptUser()
         type: "list",
         name: "selectedChoice",
         message: "What would you like to do?",
+
         //list of questios set as an array
         choices: [
             "View Employees",
+            "View All Departments",
             "View Employees by Department",
             "Add Employee",
             "Remove Employees",
@@ -52,6 +55,10 @@ function promptUser()
         case "View Employees":
           viewEmployee();
           break;
+
+        case "View All Departments":
+          viewAllDepartments();
+           break;
 
         case "View Employees by Department":
           viewEmployeeByDepartment();
@@ -81,11 +88,11 @@ function promptUser()
 }
 
 //function for each selectedChoice
-//view all employees and add somemore details using left join from other table having id as the common value
+//view all employees and add somemore details using left join from other table having id as the common value of the relationship between the tables
 
     function viewEmployee()
     {
-        console.log("EMPLOYEE DETAILS \n");
+        console.log("View All Employees \n");
         var query = 
         `SELECT e.id, e.first_name, e.last_name, r.title, d.name AS department, r.salary, CONCAT(m.first_name, ' ', m.last_name) AS manager
         FROM employee e
@@ -96,13 +103,27 @@ function promptUser()
         connection.query(query, function (err, res) {
             if (err) throw err;
             console.table(res);
-            console.log("Employees viewed!\n");       
+            console.log("Employee deatils are viewed\n");       
             promptUser();
           });
     }
+    // View all Departments
+    function viewAllDepartments() 
+    {
+    console.log("View All Departments");
+    var query = `SELECT department.id AS id, department.name AS department FROM department`;
+    connection.query(query, function (err, res) {
+      if (err) throw err;
+      console.table(res);
+      console.log("View by department");
+      promptUser();
+    });
+  }
     function viewEmployeeByDepartment()
     {   
-       console.log("EMPLOYEE DETAILS BY DEPARTMENT\n")
+       console.log("Employee details by department\n")
+       //this query based on the challenge to relate between 2 tables
+       //d is the shortname for department table
        var query =
         `SELECT d.id, d.name, MAX(r.salary) AS budget
        FROM employee e
@@ -112,22 +133,24 @@ function promptUser()
 
        connection.query(query, function (err, res) {
          if (err) throw err;
-         //data represents each row in the result set.
-         //id is the column id of the row
-         //name is  the  column name of the row
-         //map creates a new array             
+         //data : represents each row in the result set.
+         //id   : is the column id of the row
+         //name : is  the  column name of the row
+         //map  : creates a new array  
+         //the res represent each row in the array
+         //map function iterates over an array and transform the data into object with value and name properties         
          const departmentChoices = res.map(data => ({
           value: data.id, name: data.name
         }));
     
         console.table(res);
-        console.log("Employee deatis viewed by department \n");
-        promptDepartment(departmentChoices);//array of the selected department
+        console.log("Employee details are viewed by department \n");
+        selectedDepartment(departmentChoices);//array of the selected department
       });
     }
-    // User choose the department list, then employees pop up
-    function promptDepartment(departmentChoices) {
 
+    // User choose the department list, then employees pop up
+    function selectedDepartment(departmentChoices) {
         inquirer
           .prompt([
             {
@@ -137,23 +160,18 @@ function promptUser()
               choices: departmentChoices
             }
           ])
-          .then(function (answer) {
-            
-             
+          .then(function (answer) {                 
             var query =
-            `SELECT e.id, e.first_name, e.last_name, r.title, d.name AS department 
-            FROM employee e
+            `SELECT e.id, e.first_name, e.last_name, r.title, d.name AS department FROM employee e
             JOIN role r
-              ON e.role_id = r.id
+            ON e.role_id = r.id
             JOIN department d
             ON d.id = r.department_id
             WHERE d.id = ?`
             connection.query(query, answer.departmentId, function (err, res) {
               if (err) throw err;
-      
-              console.table("response ", res);
-              console.log(res.affectedRows + "Employees are viewed!\n");
-      
+              console.table("response", res);
+              console.log(res.length  +  "  Employees are viewed!\n");    
               promptUser();
             });
           });
@@ -162,7 +180,6 @@ function promptUser()
    // Make a employee array
     function addEmployee() {
         console.log("Inserting an employee!")
-  
         var query =
          `SELECT r.id, r.title, r.salary FROM role r`
   
@@ -173,11 +190,11 @@ function promptUser()
         }));
   
         console.table(res);
-        console.log("Role inserted");
-        promptInsert(roleChoices);
+        console.log("New employee role inserted");
+        employeeRoleInsert(roleChoices);
       });
       }
-      function promptInsert(roleChoices) {
+      function employeeRoleInsert(roleChoices) {
 
         inquirer
           .prompt([
@@ -236,7 +253,7 @@ function promptUser()
           }));
       
           console.table(res);
-          console.log("ArrayToDelete!\n");
+          console.log("This employee details is in delete function\n");
       
           promptDelete(deleteEmployeeChoices);
         });
