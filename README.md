@@ -1,24 +1,19 @@
-# 12 SQL: Employee Tracker
+#  Employee Tracker
 
-## Your Task
+## Table of contents
+- Overview
+    - The Challenge
+    - Screenshot
+    - Links
+- My Approach
+    - Code construction
+    - Learnings
+- Author
+## Overview
 
-Developers frequently have to create interfaces that allow non-developers to easily view and interact with information stored in databases. These interfaces are called **content management systems (CMS)**. Your assignment this week is to build a command-line application from scratch to manage a company's employee database, using Node.js, Inquirer, and MySQL.
 
-Because this Challenge will require the use of the `Inquirer` package, ensure that you install and use Inquirer version 8.2.4. To do so, use the following command in your project folder: `npm i inquirer@8.2.4`.
+### The Challenge
 
-Because this application won’t be deployed, you’ll also need to create a walkthrough video that demonstrates its functionality and all of the following acceptance criteria being met. You’ll need to submit a link to the video and add it to the README of your project.
-
-## User Story
-
-```md
-AS A business owner
-I WANT to be able to view and manage the departments, roles, and employees in my company
-SO THAT I can organize and plan my business
-```
-
-## Acceptance Criteria
-
-```md
 GIVEN a command-line application that accepts user input
 WHEN I start the application
 THEN I am presented with the following options: view all departments, view all roles, view all employees, add a department, add a role, add an employee, and update an employee role
@@ -36,13 +31,15 @@ WHEN I choose to add an employee
 THEN I am prompted to enter the employee’s first name, last name, role, and manager, and that employee is added to the database
 WHEN I choose to update an employee role
 THEN I am prompted to select an employee to update and their new role and this information is updated in the database 
-```
 
-## Mock-Up
+## Screenshot
 
 The following video shows an example of the application being used from the command line:
 
-[![A video thumbnail shows the command-line employee management application with a play button overlaying the view.](./Assets/12-sql-homework-video-thumbnail.png)](https://2u-20.wistia.com/medias/2lnle7xnpk)
+[![coomandline employee tracker](./Assets/screenshot1.png)]
+[![coomandline employee tracker](./Assets/screenshot2.png)]
+[![coomandline employee tracker](./Assets/screenshot3.png)]
+
 
 ## Getting Started
 

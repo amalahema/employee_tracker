@@ -39,6 +39,7 @@ function promptUser()
         //list of questios set as an array
         choices: [
             "View Employees",
+            "View All Departments",
             "View Employees by Department",
             "Add Employee",
             "Remove Employees",
@@ -54,6 +55,10 @@ function promptUser()
         case "View Employees":
           viewEmployee();
           break;
+
+        case "View All Departments":
+          viewAllDepartments();
+           break;
 
         case "View Employees by Department":
           viewEmployeeByDepartment();
@@ -87,7 +92,7 @@ function promptUser()
 
     function viewEmployee()
     {
-        console.log("EMPLOYEE DETAILS \n");
+        console.log("View All Employees \n");
         var query = 
         `SELECT e.id, e.first_name, e.last_name, r.title, d.name AS department, r.salary, CONCAT(m.first_name, ' ', m.last_name) AS manager
         FROM employee e
@@ -102,10 +107,23 @@ function promptUser()
             promptUser();
           });
     }
+    // View all Departments
+    function viewAllDepartments() 
+    {
+    console.log("View All Departments");
+    var query = `SELECT department.id AS id, department.name AS department FROM department`;
+    connection.query(query, function (err, res) {
+      if (err) throw err;
+      console.table(res);
+      console.log("View by department");
+      promptUser();
+    });
+  }
     function viewEmployeeByDepartment()
     {   
-       console.log("EMPLOYEE DETAILS BY DEPARTMENT\n")
-       //this query based on the challenge to realte between 2 tables
+       console.log("Employee details by department\n")
+       //this query based on the challenge to relate between 2 tables
+       //d is the shortname for department table
        var query =
         `SELECT d.id, d.name, MAX(r.salary) AS budget
        FROM employee e
@@ -152,8 +170,8 @@ function promptUser()
             WHERE d.id = ?`
             connection.query(query, answer.departmentId, function (err, res) {
               if (err) throw err;
-              console.table("Fetched details shown as the response ", res);
-              console.log(res.affectedRows + "Employees are viewed!\n");    
+              console.table("response", res);
+              console.log(res.length  +  "  Employees are viewed!\n");    
               promptUser();
             });
           });
