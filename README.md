@@ -41,7 +41,8 @@ The following video shows an example of the application being used from the comm
 [![coomandline employee tracker](./Assets/screenshot3.png)]
 
 ### Links
-Github URL :
+Github URL : https://github.com/amalahema/employee_tracker
+
 
 ## My Approach
 
